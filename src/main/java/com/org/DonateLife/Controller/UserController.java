@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.org.DonateLife.Dto.UsersDto;
 import com.org.DonateLife.Service.UserService;
+import com.org.DonateLife.Utility.ResponseHandler;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -20,15 +21,11 @@ public class UserController {
 
 	@PostMapping("/save-user")
 	public ResponseEntity<?> saveUser(@RequestBody UsersDto user) {
-
-		System.out.println();
-		System.out.println(user.getBloodGroup().getId());
-		System.out.println();
 		boolean saveUser = userService.saveUser(user);
 		if (saveUser) {
-			return new ResponseEntity("Saved Successfully", HttpStatus.OK);
+			return ResponseHandler.withMessage("Saved Successfully", HttpStatus.OK);
 		} else {
-			return new ResponseEntity("Something went wrong", HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseHandler.withMessage("Something went wrong", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }
